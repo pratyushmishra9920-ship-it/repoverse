@@ -9,11 +9,24 @@ import styles from './RepositoryView.module.css'
 interface RepositoryViewProps {
   data: RepositoryData
   onBack: () => void
+  isDemo: boolean
+  demoNotice: string
+  retryError: string | null
+  retrying: boolean
+  onRetryGitHub: () => void
 }
 
 type TabType = 'overview' | 'files' | 'languages' | 'contributors' | 'commits'
 
-export const RepositoryView: React.FC<RepositoryViewProps> = ({ data, onBack }) => {
+export const RepositoryView: React.FC<RepositoryViewProps> = ({
+  data,
+  onBack,
+  isDemo,
+  demoNotice,
+  retryError,
+  retrying,
+  onRetryGitHub,
+}) => {
   const [activeTab, setActiveTab] = useState<TabType>('overview')
 
   const totalLines = Object.values(data.languages).reduce((a, b) => a + b, 0)
@@ -21,6 +34,18 @@ export const RepositoryView: React.FC<RepositoryViewProps> = ({ data, onBack }) 
 
   return (
     <div className={styles.container}>
+      {isDemo && (
+        <div className={styles.demoNotice}>
+          <div>
+            <strong className={styles.demoLabel}>Demo Data</strong>
+            <p>{demoNotice}</p>
+            {retryError && <p className={styles.retryError} role="alert">{retryError}</p>}
+          </div>
+          <button className={styles.retryButton} onClick={onRetryGitHub} disabled={retrying}>
+            {retrying ? 'Retrying GitHub API…' : 'Retry GitHub API'}
+          </button>
+        </div>
+      )}
       <div className={styles.header}>
         <button className={styles.backButton} onClick={onBack} aria-label="Go back">
           ← Back

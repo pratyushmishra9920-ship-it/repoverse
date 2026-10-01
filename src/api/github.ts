@@ -11,6 +11,13 @@ const GITHUB_API_BASE = 'https://api.github.com'
 const MAX_TREE_DEPTH = 3
 const MAX_TREE_ITEMS = 1000
 
+export class GitHubRateLimitError extends Error {
+  constructor() {
+    super('GitHub API rate limit exceeded. Please try again later. (60 requests/hour for unauthenticated requests)')
+    this.name = 'GitHubRateLimitError'
+  }
+}
+
 interface GitHubRepositoryResponse {
   name: string
   owner: { login: string }
@@ -82,13 +89,22 @@ function parseGitHubUrl(url: string): { owner: string; repo: string } {
 async function fetchGitHubAPI<T>(endpoint: string): Promise<T> {
   const response = await fetch(`${GITHUB_API_BASE}${endpoint}`)
 
-  if (response.status === 403) {
+  if (response.status === 403 || response.status === 429) {
     const remaining = response.headers.get('x-ratelimit-remaining')
-    if (remaining === '0') {
-      throw new Error(
-        'GitHub API rate limit exceeded. Please try again later. (60 requests/hour for unauthenticated requests)'
-      )
+    let errorMessage = ''
+    try {
+      const errorBody: { message?: unknown } = await response.clone().json()
+      if (typeof errorBody.message === 'string') errorMessage = errorBody.message
+    } catch {
+      // Preserve the status-based error when GitHub omits a JSON error body.
     }
+
+    if (response.status === 429 || remaining === '0' || /rate limit/i.test(errorMessage)) {
+      throw new GitHubRateLimitError()
+    }
+  }
+
+  if (response.status === 403) {
     throw new Error('Access forbidden. The repository might be private.')
   }
 

@@ -2,7 +2,8 @@ import React, { useState, useCallback } from 'react'
 import { URLInput } from './components/URLInput'
 import { RepositoryView } from './components/RepositoryView'
 import { ErrorDisplay } from './components/ErrorDisplay'
-import { fetchRepositoryData } from './api/github'
+import { DEMO_REPOSITORY } from './api/demoRepository'
+import { fetchRepositoryData, GitHubRateLimitError } from './api/github'
 import type { RepositoryData } from './types'
 import styles from './App.module.css'
 
@@ -10,22 +11,48 @@ export const App: React.FC = () => {
   const [repoData, setRepoData] = useState<RepositoryData | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [repoUrl, setRepoUrl] = useState('')
+  const [isDemo, setIsDemo] = useState(false)
+  const [demoNotice, setDemoNotice] = useState('')
+  const [retryError, setRetryError] = useState<string | null>(null)
 
-  const handleRepoSubmit = useCallback(async (url: string) => {
+  const loadRepository = useCallback(async (url: string, isRetry = false) => {
     setLoading(true)
-    setError(null)
-    setRepoData(null)
+    setRetryError(null)
+    if (!isRetry) {
+      setRepoUrl(url)
+      setError(null)
+      setRepoData(null)
+      setIsDemo(false)
+      setDemoNotice('')
+    }
 
     try {
       const data = await fetchRepositoryData(url)
       setRepoData(data)
+      setIsDemo(false)
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to load repository'
-      setError(message)
+      if (err instanceof GitHubRateLimitError) {
+        setRepoData(DEMO_REPOSITORY)
+        setIsDemo(true)
+        setDemoNotice(
+          isRetry
+            ? 'GitHub is still rate-limited, so the demo remains available.'
+            : 'GitHub API rate limit reached. This built-in sample keeps the full visualization available.'
+        )
+      } else if (isRetry) {
+        setRetryError(message)
+      } else {
+        setError(message)
+      }
     } finally {
       setLoading(false)
     }
   }, [])
+
+  const handleRepoSubmit = useCallback((url: string) => loadRepository(url), [loadRepository])
+  const handleRetry = useCallback(() => loadRepository(repoUrl, true), [loadRepository, repoUrl])
 
   return (
     <div className={styles.app}>
@@ -40,7 +67,15 @@ export const App: React.FC = () => {
             {error && <ErrorDisplay message={error} />}
           </div>
         ) : (
-          <RepositoryView data={repoData} onBack={() => setRepoData(null)} />
+          <RepositoryView
+            data={repoData}
+            onBack={() => setRepoData(null)}
+            isDemo={isDemo}
+            demoNotice={demoNotice}
+            retryError={retryError}
+            retrying={loading}
+            onRetryGitHub={handleRetry}
+          />
         )}
       </div>
     </div>
