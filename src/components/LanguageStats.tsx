@@ -1,9 +1,9 @@
 import React from 'react'
-import type { LanguageStats } from '../types'
+import type { LanguageStats as LanguageStatsData } from '../types'
 import styles from './LanguageStats.module.css'
 
 interface LanguageStatsProps {
-  languages: LanguageStats
+  languages: LanguageStatsData
 }
 
 export const LanguageStats: React.FC<LanguageStatsProps> = ({ languages }) => {

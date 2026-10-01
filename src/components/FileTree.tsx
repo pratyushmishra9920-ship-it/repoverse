@@ -37,27 +37,30 @@ export const FileTree: React.FC<FileTreeProps> = ({ node }) => {
     return (
       <div className={styles.node} style={{ paddingLeft: `${depth * 1.5}rem` }}>
         {isDir ? (
-          <div
-            className={styles.dirNode}
-            onClick={() => toggleExpand(n.path)}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                toggleExpand(n.path)
-              }
-            }}
-          >
-            <span className={`${styles.icon} ${isExpanded ? styles.expanded : ''}`}>▶</span>
-            <span className={styles.name}>📁 {n.name}</span>
-          </div>
-          {isExpanded && hasChildren && (
-            <div className={styles.children}>
-              {n.children!.map((child) => (
-                <div key={child.path}>{renderNode(child, depth + 1)}</div>
-              ))}
+          <>
+            <div
+              className={styles.dirNode}
+              onClick={() => toggleExpand(n.path)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  toggleExpand(n.path)
+                }
+              }}
+            >
+              <span className={`${styles.icon} ${isExpanded ? styles.expanded : ''}`}>▶</span>
+              <span className={styles.name}>📁 {n.name}</span>
             </div>
-          )}
+            {isExpanded && hasChildren && (
+              <div className={styles.children}>
+                {n.children!.map((child) => (
+                  <div key={child.path}>{renderNode(child, depth + 1)}</div>
+                ))}
+              </div>
+            )}
+          </>
         ) : (
           <div className={styles.fileNode}>
             <span className={styles.icon}>📄</span>
