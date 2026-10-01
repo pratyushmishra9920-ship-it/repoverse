@@ -1,111 +1,207 @@
-# RepoVerse
+# 🌌 RepoVerse
 
-Turn any GitHub repository into a living interactive universe.
+**Turn any GitHub repository into a living interactive universe.**
 
-## 🚀 Quick Start
+Built during **OSEN Lucknow: GitHub Copilot Dev Days** on October 1, 2026, using **GitHub Copilot** for AI-assisted planning, implementation, debugging, and iteration.
 
-### Local Development
+🔗 **Live Demo:** https://repoverse-kappa.vercel.app
 
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+---
 
-2. **Start dev server:**
-   ```bash
-   npm run dev
-   ```
-   The app will be available at `http://localhost:3000`
+## 🚀 About
 
-3. **Build for production:**
-   ```bash
-   npm run build
-   ```
+RepoVerse transforms any public GitHub repository into an interactive visual experience.
 
-### Type Checking
+Enter a GitHub repository URL and explore its **files, directories, languages, contributors, commits, repository statistics, and activity** through a futuristic interface.
+
+The project was built as a hands-on demonstration of **AI-assisted software development with GitHub Copilot** during OSEN Lucknow: Copilot Dev Days.
+
+---
+
+## ✨ Features
+
+* **Repository Metadata** — View stars, forks, watchers, description, and key statistics
+* **Interactive File Explorer** — Explore repository directories and files
+* **Language Statistics** — Visual breakdown of programming languages
+* **Contributors** — View top contributors and contribution counts
+* **Recent Commits** — Explore recent commits with author and date information
+* **Interactive Universe UI** — Transform repository data into a visual experience
+* **Demo Data Fallback** — Remains usable when the GitHub API rate limit is reached
+* **Retry GitHub API** — Retry live GitHub data when the API becomes available
+* **Responsive Design** — Works across desktop and mobile screens
+* **Accessibility** — Keyboard navigation and reduced-motion support
+* **Error Handling** — Handles invalid repositories, API errors, and rate limits gracefully
+
+---
+
+## 🔧 How It Works
+
+1. Enter any public GitHub repository URL.
+2. RepoVerse parses the repository information.
+3. It fetches repository data using the **GitHub REST API**.
+4. The data is processed and displayed through the RepoVerse interface.
+5. Explore repository structure, languages, contributors, commits, and statistics.
+6. When GitHub's API rate limit is reached, RepoVerse automatically switches to clearly labelled **Demo Data** so the experience remains usable.
+
+---
+
+## 📡 GitHub API
+
+RepoVerse currently uses the public GitHub REST API.
+
+* **Public repositories:** Supported
+* **Authentication:** Not required for normal usage
+* **Unauthenticated rate limit:** 60 requests/hour
+* **Rate-limit fallback:** Built-in demo dataset
+* **Retry:** Available after the API becomes available
+
+The application does **not** expose or require a GitHub token.
+
+---
+
+## 🌐 Deployment
+
+### Vercel
+
+RepoVerse is deployed on **Vercel**.
+
+**Live Demo:**
+https://repoverse-kappa.vercel.app
+
+To deploy your own instance:
+
+1. Fork or clone the repository.
+2. Install dependencies.
+3. Build the project.
+4. Connect the repository to Vercel.
+5. Deploy.
+
+Vercel automatically detects the Vite application.
+
+---
+
+## 🛠️ Tech Stack
+
+* **React 18** — UI framework
+* **TypeScript** — Type-safe development
+* **Vite** — Development server and build tool
+* **CSS Modules** — Scoped styling
+* **GitHub REST API** — Repository data source
+* **Vercel** — Deployment platform
+* **GitHub Copilot** — AI-assisted development
+
+---
+
+## 🤖 Built with GitHub Copilot
+
+RepoVerse was developed during **OSEN Lucknow: GitHub Copilot Dev Days** using GitHub Copilot as an AI development partner.
+
+Copilot was used for:
+
+* Project planning and architecture
+* React/TypeScript implementation
+* GitHub API integration
+* UI development
+* Error handling
+* Debugging and build fixes
+* Rate-limit fallback implementation
+* Type checking and production build verification
+
+The development workflow included **planning → implementation → testing → debugging → GitHub → Vercel deployment**.
+
+---
+
+## 🎨 UI/UX
+
+* Futuristic dark interface
+* Responsive design
+* Smooth animations and transitions
+* Reduced-motion support
+* Keyboard-friendly navigation
+* Mobile-friendly layout
+* Clear loading and error states
+
+---
+
+## 💻 Local Development
+
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Start the development server
+
+```bash
+npm run dev
+```
+
+The application will be available at:
+
+```text
+http://localhost:3000
+```
+
+### 3. Type check
 
 ```bash
 npm run type-check
 ```
 
-## 📋 Features
+### 4. Build for production
 
-- **Repository Metadata**: View stars, forks, watchers, and description
-- **File Tree Explorer**: Interactive recursive directory and file browser
-- **Language Statistics**: Visual breakdown of repository languages
-- **Contributors**: Top contributors with contribution counts
-- **Recent Commits**: Latest commits with author and date information
-- **Responsive Design**: Works seamlessly on desktop and mobile
-- **Accessibility**: Full keyboard navigation and screen reader support
-- **Performance**: Optimized concurrent API requests with proper error handling
-
-## 🔧 How It Works
-
-1. Enter any public GitHub repository URL (e.g., `owner/repo` or `https://github.com/owner/repo`)
-2. RepoVerse fetches data via the public GitHub REST API (no authentication required)
-3. Explore the repository's structure, languages, contributors, and recent activity
-4. Click on GitHub links to view the original repository
-
-## 📡 API Limits
-
-- **Rate Limit**: 60 requests/hour (unauthenticated)
-- **Data Scope**: Public repositories only
-- **Concurrent Requests**: Optimized to reduce API calls
-
-## 🌐 Deployment
-
-### Vercel (Recommended)
-
-1. Push to GitHub
-2. Connect repository to Vercel at [vercel.com](https://vercel.com)
-3. Vercel automatically detects Vite and deploys
-
-**Manual Vercel deployment:**
 ```bash
-npm i -g vercel
-vercel
+npm run build
 ```
 
-### Other Platforms
-
-The build output is in the `dist/` directory and can be deployed to:
-- **Netlify**: Upload `dist/` folder
-- **GitHub Pages**: Upload `dist/` folder
-- **Any static host**: Copy contents of `dist/`
-
-## 🛠️ Tech Stack
-
-- **React 18**: UI framework
-- **TypeScript**: Type safety
-- **Vite**: Build tool and dev server
-- **CSS Modules**: Scoped styling
-- **GitHub REST API**: Data source (public endpoints)
-
-## 🎨 UI/UX
-
-- **Responsive**: Mobile-first design
-- **Dark Theme**: Eye-friendly futuristic interface
-- **Animations**: Smooth transitions with motion-reduced support
-- **Accessibility**: WCAG 2.1 compliant with keyboard navigation
-
-## 📝 Configuration
-
-### Environment Variables
-
-No authentication required. The app works with the public GitHub API.
-
-For higher rate limits (unauthenticated: 60/hour):
-- Create a GitHub token at [github.com/settings/tokens](https://github.com/settings/tokens)
-- The app could be extended to accept tokens in future versions
+---
 
 ## 🐛 Troubleshooting
 
-**"Repository not found"**: Check the URL and ensure the repository is public
+### Repository not found
 
-**"Rate limit exceeded"**: Wait an hour or use a GitHub authentication token
+Check that:
 
-**"API error"**: The GitHub API might be temporarily unavailable
+* The GitHub URL is correct.
+* The repository is public.
+* The repository still exists.
 
-## 📄 License
+### GitHub API rate limit exceeded
 
-MIT
+RepoVerse automatically switches to **Demo Data** so the visualization remains available.
+
+Use **Retry GitHub API** to attempt loading the live repository data again.
+
+### API error
+
+The GitHub API may be temporarily unavailable. Retry the request later.
+
+---
+
+## 📁 Project Structure
+
+```text
+repoverse/
+├── src/
+├── public/
+├── index.html
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+├── vercel.json
+└── README.md
+```
+
+---
+
+## 🏆 Event
+
+### OSEN Lucknow — GitHub Copilot Dev Days
+
+**Date:** October 1, 2026
+**Project:** RepoVerse
+**Built with:** GitHub Copilot
+**Deployment:** Vercel
+
+RepoVerse was created as a hands-on project during the **OSEN Lucknow: Copilot Dev Days** event to demonstrate how GitHub Copilot can assist with building, testing, debugging, and deploying a real-world application.
