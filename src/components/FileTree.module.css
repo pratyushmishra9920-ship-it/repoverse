@@ -1,0 +1,93 @@
+.tree {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.9rem;
+}
+
+.node {
+  display: flex;
+  flex-direction: column;
+}
+
+.dirNode,
+.fileNode {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 0.25rem;
+  user-select: none;
+}
+
+.dirNode:hover,
+.fileNode:hover {
+  background: rgba(96, 165, 250, 0.1);
+  color: #60a5fa;
+}
+
+.dirNode {
+  cursor: pointer;
+  font-weight: 500;
+  color: #cbd5e1;
+}
+
+.fileNode {
+  color: #94a3b8;
+  cursor: default;
+}
+
+.icon {
+  display: inline-block;
+  transition: transform 0.2s ease;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.icon.expanded {
+  transform: rotate(90deg);
+}
+
+.name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.size {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-left: 0.5rem;
+  flex-shrink: 0;
+}
+
+.children {
+  display: flex;
+  flex-direction: column;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .tree {
+    font-size: 0.8rem;
+  }
+
+  .node {
+    padding-left: 0 !important;
+  }
+}

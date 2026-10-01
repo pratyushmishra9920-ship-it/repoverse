@@ -1,0 +1,84 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.commit {
+  padding: 1.5rem;
+  background: rgba(30, 58, 138, 0.2);
+  border: 1px solid rgba(96, 165, 250, 0.2);
+  border-radius: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  display: block;
+}
+
+.commit:hover {
+  background: rgba(30, 58, 138, 0.4);
+  border-color: rgba(96, 165, 250, 0.4);
+  transform: translateX(4px);
+  box-shadow: 0 8px 16px rgba(96, 165, 250, 0.15);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.sha {
+  font-family: 'Fira Code', 'Courier New', monospace;
+  color: #60a5fa;
+  font-weight: 600;
+  font-size: 0.9rem;
+  background: rgba(96, 165, 250, 0.1);
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+}
+
+.date {
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+.message {
+  margin: 0;
+  color: #e2e8f0;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  word-break: break-word;
+}
+
+.author {
+  margin: 0;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+}
+
+.empty {
+  padding: 2rem;
+  text-align: center;
+  color: #64748b;
+}
+
+@media (max-width: 768px) {
+  .commit {
+    padding: 1rem;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sha {
+    font-size: 0.8rem;
+  }
+}
